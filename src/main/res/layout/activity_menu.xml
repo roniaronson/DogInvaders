@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgro"
+    tools:context=".Activity_Menu">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:layout_weight="10"
+            android:text="choose your dog :"
+            android:textSize="50dp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/Menu_BTN_poodle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:background="#00ffffff"
+            app:srcCompat="@drawable/poodlenew" />
+
+        <ImageButton
+            android:id="@+id/Menu_BTN_bulldog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:background="#00ffffff"
+            app:srcCompat="@drawable/bulldog" />
+
+        <ImageButton
+            android:id="@+id/Menu_BTN_borderCollie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:background="#00ffffff"
+            app:srcCompat="@drawable/bordercollie" />
+    </LinearLayout>
+</RelativeLayout>
