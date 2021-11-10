@@ -4,47 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgro"
+    android:background="@drawable/menu_backround"
     tools:context=".Activity_Menu">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="30dp"
-            android:layout_weight="10"
-            android:text="choose your dog :"
-            android:textSize="50dp"
-            android:textStyle="bold" />
-
-        <ImageButton
-            android:id="@+id/Menu_BTN_poodle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:background="#00ffffff"
-            app:srcCompat="@drawable/poodlenew" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:fontFamily="@font/space2"
+            android:text="Dog Invanders"
+            android:textColor="@color/black"
+            android:textSize="45dp" />
 
-        <ImageButton
-            android:id="@+id/Menu_BTN_bulldog"
+        <TextView
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:background="#00ffffff"
-            app:srcCompat="@drawable/bulldog" />
+            android:layout_centerHorizontal="true"
+            android:textSize="30dp"
+            android:layout_marginTop="150dp"
+            android:textStyle="bold"
+            android:text="Pick Your Player:"
+            android:textColor="@color/black"
+            android:fontFamily="@font/space2"/>
 
-        <ImageButton
-            android:id="@+id/Menu_BTN_borderCollie"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:background="#00ffffff"
-            app:srcCompat="@drawable/bordercollie" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/Menu_BTN_poodle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:background="#00ffffff"
+                app:srcCompat="@drawable/poodlenew" />
+
+            <ImageButton
+                android:id="@+id/Menu_BTN_bulldog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:background="#00ffffff"
+                app:srcCompat="@drawable/img_bulldog" />
+
+            <ImageButton
+                android:id="@+id/Menu_BTN_borderCollie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:background="#00ffffff"
+                app:srcCompat="@drawable/img_bordercollie" />
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -4,20 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgro"
+    android:background="@drawable/img_gameoverback"
     tools:context=".Activity_GameOver">
 
-    <ImageView
-        android:id="@+id/gameOver_IMG_gameOver"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        app:srcCompat="@drawable/game" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="180dp"
+        android:fontFamily="@font/space2"
+        android:text="GAME OVER"
+        android:textColor="@color/black"
+        android:textSize="50dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/gameOver_IMG_gameOver"
+        android:layout_below="@+id/textView"
         android:orientation="horizontal">
 
         <ImageButton
@@ -38,7 +42,7 @@
             android:layout_marginBottom="40dp"
             android:layout_weight="1"
             android:background="#00ffffff"
-            app:srcCompat="@drawable/logout" />
+            app:srcCompat="@drawable/img_logout" />
 
     </LinearLayout>
 

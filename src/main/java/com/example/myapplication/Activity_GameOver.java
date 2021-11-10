@@ -25,17 +25,28 @@ public class Activity_GameOver extends AppCompatActivity {
             }
         });
 
-    }
+        playOrExit[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exitGame();
+            }
+        });
 
+    }
 
     private void openActivityPanel() {
         Intent gameScreen = new Intent(this, Activity_Menu.class);
         startActivity(gameScreen);
     }
 
+
+    private void exitGame() {
+        System.exit(0);
+    }
+
     private void findViews() {
         playOrExit = new ImageButton[]{
-                findViewById(R.id.gameOver_BTN_play)
+                findViewById(R.id.gameOver_BTN_play), findViewById(R.id.gameOver_BTN_exit)
         };
     }
 }

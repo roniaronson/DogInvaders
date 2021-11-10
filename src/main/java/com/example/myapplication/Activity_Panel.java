@@ -21,15 +21,21 @@ public class Activity_Panel extends AppCompatActivity {
     private int[][] vals;
     private ImageView[] panel_IMG_hearts;
     private ImageButton[] panel_IMG_direction;
+
     private final int MAX_LIVES = 3;
     private int curLives = 3;
-    final int DELAY = 500;
+    final int DELAY = 400;
     private int index_PoodleRow = 5;
     private int path_number = 3;
-    private int IMG_number = 3;
+    private int IMG_number = 9;
+    private int index_bone = 9;
+    private int IMG_dog = 10;
     private int timer = 0;
     private int dog_id = 0;
-    MediaPlayer mediaPlayer;
+
+    MediaPlayer mediaPlayer_background;
+    MediaPlayer mediaPlayer_bark;
+    MediaPlayer mediaPlayer_cry;
 
 
     final Handler handler = new Handler();
@@ -48,35 +54,24 @@ public class Activity_Panel extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Bundle b = getIntent().getExtras();
         dog_id = b.getInt("dog_id");
-        //mediaPlayer =  MediaPlayer.create(Activity_Panel.this, R.raw.music);
-        //mediaPlayer.start();
+        mediaPlayer_background =  MediaPlayer.create(Activity_Panel.this, R.raw.music);
+        mediaPlayer_background.start();
+        mediaPlayer_bark = MediaPlayer.create(Activity_Panel.this, R.raw.single_bark);
+        mediaPlayer_cry = MediaPlayer.create(Activity_Panel.this, R.raw.dog_cry);
         findViews();
-
-
 
         panel_IMG_direction[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                movePoodle(-1);
+                moveDog(-1);
             }
         });
         panel_IMG_direction[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                movePoodle(1);
+                moveDog(1);
             }
         });
-    }
-
-    private void movePoodle(int direction) {
-        int curPos = getPoodlePosition();
-        vals[index_PoodleRow][curPos] = 0;
-        if (direction == 1)
-            curPos++;
-        else
-            curPos--;
-        vals[index_PoodleRow][curPos] = 4;
-
     }
 
     @Override
@@ -115,7 +110,7 @@ public class Activity_Panel extends AppCompatActivity {
                 vals[i][j] = 0;
             }
         }
-        vals[5][1] = 4;
+        vals[5][1] = IMG_dog;
 
         panel_IMG_direction = new ImageButton[]{
                 findViewById(R.id.panel_IMG_left), findViewById(R.id.panel_IMG_right)};
@@ -149,11 +144,17 @@ public class Activity_Panel extends AppCompatActivity {
 
 
     private void checkCrash() {
-        int curPos = getPoodlePosition();
-        if (vals[index_PoodleRow - 1][curPos] == 1 || vals[index_PoodleRow - 1][curPos] == 2)
+        int curPos = getDogPosition();
+        if (vals[index_PoodleRow - 1][curPos] != 0 && vals[index_PoodleRow - 1][curPos] != index_bone){
+            mediaPlayer_cry.start();
             updateLives(false);
-        if (vals[index_PoodleRow - 1][curPos] == 3)
+        }
+
+        if (vals[index_PoodleRow - 1][curPos] == index_bone){
+            mediaPlayer_bark.start();
             updateLives(true);
+        }
+
     }
 
     private void updateLives(boolean isBone) {
@@ -168,19 +169,11 @@ public class Activity_Panel extends AppCompatActivity {
                 panel_IMG_hearts[curLives - 1].setVisibility(View.INVISIBLE);
                 curLives--;
             } else {
-                mediaPlayer.stop();
+                mediaPlayer_background.stop();
                 Intent gameOverScreen = new Intent(this, Activity_GameOver.class);
                 startActivity(gameOverScreen);
+                finish();
             }
-        }
-    }
-
-    private void vibrate() {
-        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            v.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE));
-        } else {
-            v.vibrate(300);
         }
     }
 
@@ -191,24 +184,48 @@ public class Activity_Panel extends AppCompatActivity {
                     view_path[i][j].setVisibility(View.INVISIBLE);
                 }
                 if (vals[i][j] == 1) {
-                    view_path[i][j].setImageResource(R.drawable.eggplant);
+                    view_path[i][j].setImageResource(R.drawable.spaceinvaders);
                     view_path[i][j].setVisibility(View.VISIBLE);
                 }
                 if (vals[i][j] == 2) {
-                    view_path[i][j].setImageResource(R.drawable.strawberry);
+                    view_path[i][j].setImageResource(R.drawable.ufo);
                     view_path[i][j].setVisibility(View.VISIBLE);
                 }
                 if (vals[i][j] == 3) {
-                    view_path[i][j].setImageResource(R.drawable.bone);
+                    view_path[i][j].setImageResource(R.drawable.planet);
                     view_path[i][j].setVisibility(View.VISIBLE);
                 }
                 if (vals[i][j] == 4) {
+                    view_path[i][j].setImageResource(R.drawable.IMG_astronaut);
+                    view_path[i][j].setVisibility(View.VISIBLE);
+                }
+                if (vals[i][j] == 5) {
+                    view_path[i][j].setImageResource(R.drawable.ufo2);
+                    view_path[i][j].setVisibility(View.VISIBLE);
+                }
+                if (vals[i][j] == 6) {
+                    view_path[i][j].setImageResource(R.drawable.ufo3);
+                    view_path[i][j].setVisibility(View.VISIBLE);
+                }
+                if (vals[i][j] == 7) {
+                    view_path[i][j].setImageResource(R.drawable.spaceship2);
+                    view_path[i][j].setVisibility(View.VISIBLE);
+                }
+                if (vals[i][j] == 8) {
+                    view_path[i][j].setImageResource(R.drawable.spaceship3);
+                    view_path[i][j].setVisibility(View.VISIBLE);
+                }
+                if (vals[i][j] == index_bone) {
+                    view_path[i][j].setImageResource(R.drawable.img_bone);
+                    view_path[i][j].setVisibility(View.VISIBLE);
+                }
+                if (vals[i][j] == IMG_dog) {
                     view_path[i][j].setImageResource(dog_id);
                     view_path[i][j].setVisibility(View.VISIBLE);
                 }
             }
         }
-        int curPos = getPoodlePosition();
+        int curPos = getDogPosition();
         if (curPos == 0) {
             panel_IMG_direction[0].setVisibility(View.INVISIBLE);
             panel_IMG_direction[1].setVisibility(View.VISIBLE);
@@ -223,12 +240,32 @@ public class Activity_Panel extends AppCompatActivity {
         }
     }
 
-    private int getPoodlePosition() {
+    private int getDogPosition() {
         for (int i = 0; i < vals[index_PoodleRow].length; i++) {
-            if (vals[index_PoodleRow][i] == 4)
+            if (vals[index_PoodleRow][i] == IMG_dog)
                 return i;
         }
         return -1;
+    }
+
+    private void moveDog(int direction) {
+        int curPos = getDogPosition();
+        vals[index_PoodleRow][curPos] = 0;
+        if (direction == 1)
+            curPos++;
+        else
+            curPos--;
+        vals[index_PoodleRow][curPos] = IMG_dog;
+
+    }
+
+    private void vibrate() {
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            v.vibrate(300);
+        }
     }
 
 }
