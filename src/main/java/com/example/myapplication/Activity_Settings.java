@@ -48,12 +48,13 @@ public class Activity_Settings extends AppCompatActivity {
     }
 
     private void openActivityPanel(int dog_id) {
+        finish();
         Intent gameScreen = new Intent(this, Activity_Panel.class);
         gameScreen.putExtra("dog_id", dog_id);
         gameScreen.putExtra("sensors", sw_sensors.isChecked());
         gameScreen.putExtra("isSlow", rb_slow.isChecked());
         startActivity(gameScreen);
-        finish();
+
     }
 
     private void findViews() {

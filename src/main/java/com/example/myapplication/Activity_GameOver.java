@@ -35,8 +35,10 @@ public class Activity_GameOver extends AppCompatActivity {
     }
 
     private void openActivityPanel() {
+        finish();
         Intent gameScreen = new Intent(this, Activity_Settings.class);
         startActivity(gameScreen);
+
     }
 
 

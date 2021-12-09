@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -34,7 +33,7 @@ public class Activity_Panel extends AppCompatActivity {
 
     private final int MAX_LIVES = 3;
 
-    final int DELAY = 400;
+    private int DELAY = 400;
 
     private int timer = 0;
 
@@ -76,7 +75,10 @@ public class Activity_Panel extends AppCompatActivity {
         mediaPlayer_background.start();
         mediaPlayer_bark = MediaPlayer.create(Activity_Panel.this, R.raw.single_bark);
         mediaPlayer_cry = MediaPlayer.create(Activity_Panel.this, R.raw.dog_cry);
+
         findViews();
+
+        initDELAY(is_slow);
 
         if(sensors){
             initSensor();
@@ -98,6 +100,13 @@ public class Activity_Panel extends AppCompatActivity {
         });
 
 
+    }
+
+    private void initDELAY(boolean is_slow) {
+        if(is_slow)
+            this.DELAY = 400;
+        else
+            this.DELAY = 200;
     }
 
     @Override
@@ -199,9 +208,9 @@ public class Activity_Panel extends AppCompatActivity {
                 curLives--;
             } else {
                 mediaPlayer_background.stop();
+                finish();
                 Intent gameOverScreen = new Intent(this, Activity_GameOver.class);
                 startActivity(gameOverScreen);
-                finish();
             }
         }
     }
@@ -322,16 +331,19 @@ public class Activity_Panel extends AppCompatActivity {
         public void onAccuracyChanged(Sensor sensor, int i) {
         }
     };
+
     @Override
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(accSensorEventListener, accSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        if(sensors)
+            sensorManager.registerListener(accSensorEventListener, accSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        sensorManager.unregisterListener(accSensorEventListener);
+        if(sensors)
+            sensorManager.unregisterListener(accSensorEventListener);
     }
 
     private void vibrate() {

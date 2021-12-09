@@ -44,9 +44,10 @@ public class Activity_Menu extends AppCompatActivity {
     }
 
     private void openActivitySettings() {
+        finish();
         Intent gameScreen = new Intent(this, Activity_Settings.class);
         startActivity(gameScreen);
-        finish();
+
     }
 
     private void openActivityTopTen() {
