@@ -25,13 +25,15 @@ public class Activity_Panel extends AppCompatActivity {
     private final int MAX_LIVES = 3;
     private int curLives = 3;
     final int DELAY = 400;
-    private int index_PoodleRow = 5;
-    private int path_number = 3;
+    private int index_PoodleRow = 8;
+    private int path_number = 5;
     private int IMG_number = 9;
     private int index_bone = 9;
     private int IMG_dog = 10;
     private int timer = 0;
     private int dog_id = 0;
+    private  boolean is_slow = true;
+    private boolean sensors = false;
 
     MediaPlayer mediaPlayer_background;
     MediaPlayer mediaPlayer_bark;
@@ -54,6 +56,8 @@ public class Activity_Panel extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Bundle b = getIntent().getExtras();
         dog_id = b.getInt("dog_id");
+        is_slow = b.getBoolean("isSlow");
+        sensors = b.getBoolean("sensors");
         mediaPlayer_background =  MediaPlayer.create(Activity_Panel.this, R.raw.music);
         mediaPlayer_background.start();
         mediaPlayer_bark = MediaPlayer.create(Activity_Panel.this, R.raw.single_bark);
@@ -72,6 +76,11 @@ public class Activity_Panel extends AppCompatActivity {
                 moveDog(1);
             }
         });
+
+        if(sensors){
+            panel_IMG_direction[0].setVisibility(View.INVISIBLE);
+            panel_IMG_direction[1].setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -102,7 +111,10 @@ public class Activity_Panel extends AppCompatActivity {
                 {findViewById(R.id.panel_IMG_20), findViewById(R.id.panel_IMG_21), findViewById(R.id.panel_IMG_22)},
                 {findViewById(R.id.panel_IMG_30), findViewById(R.id.panel_IMG_31), findViewById(R.id.panel_IMG_32)},
                 {findViewById(R.id.panel_IMG_40), findViewById(R.id.panel_IMG_41), findViewById(R.id.panel_IMG_42)},
-                {findViewById(R.id.panel_IMG_50), findViewById(R.id.panel_IMG_51), findViewById(R.id.panel_IMG_52)}
+                {findViewById(R.id.panel_IMG_50), findViewById(R.id.panel_IMG_51), findViewById(R.id.panel_IMG_52)},
+                {findViewById(R.id.panel_IMG_60), findViewById(R.id.panel_IMG_61), findViewById(R.id.panel_IMG_62)},
+                {findViewById(R.id.panel_IMG_70), findViewById(R.id.panel_IMG_71), findViewById(R.id.panel_IMG_72)},
+                {findViewById(R.id.panel_IMG_80), findViewById(R.id.panel_IMG_81), findViewById(R.id.panel_IMG_82)}
         };
         vals = new int[view_path.length][view_path[0].length];
         for (int i = 0; i < vals.length; i++) {
@@ -110,7 +122,7 @@ public class Activity_Panel extends AppCompatActivity {
                 vals[i][j] = 0;
             }
         }
-        vals[5][1] = IMG_dog;
+        vals[8][2] = IMG_dog;
 
         panel_IMG_direction = new ImageButton[]{
                 findViewById(R.id.panel_IMG_left), findViewById(R.id.panel_IMG_right)};
@@ -196,7 +208,7 @@ public class Activity_Panel extends AppCompatActivity {
                     view_path[i][j].setVisibility(View.VISIBLE);
                 }
                 if (vals[i][j] == 4) {
-                    view_path[i][j].setImageResource(R.drawable.IMG_astronaut);
+                    view_path[i][j].setImageResource(R.drawable.img_astronaut);
                     view_path[i][j].setVisibility(View.VISIBLE);
                 }
                 if (vals[i][j] == 5) {
@@ -235,6 +247,14 @@ public class Activity_Panel extends AppCompatActivity {
             panel_IMG_direction[1].setVisibility(View.VISIBLE);
         }
         if (curPos == 2) {
+            panel_IMG_direction[0].setVisibility(View.VISIBLE);
+            panel_IMG_direction[1].setVisibility(View.VISIBLE);
+        }
+        if (curPos == 3) {
+            panel_IMG_direction[0].setVisibility(View.VISIBLE);
+            panel_IMG_direction[1].setVisibility(View.VISIBLE);
+        }
+        if (curPos == 4) {
             panel_IMG_direction[0].setVisibility(View.VISIBLE);
             panel_IMG_direction[1].setVisibility(View.INVISIBLE);
         }

@@ -3,70 +3,63 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.button.MaterialButton;
 
-public class Activity_Menu  extends AppCompatActivity {
+public class Activity_Menu extends AppCompatActivity {
 
-    ImageButton[] dogs;
+    private MaterialButton menu_BTN_startGame;
+    private MaterialButton menu_BTN_topTen;
+    private MaterialButton menu_BTN_Exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_open_menu);
         findViews();
 
-        dogs[0].setOnClickListener(new View.OnClickListener() {
+        menu_BTN_startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openActivityPanelPoodle();
+                openActivitySettings();
             }
         });
 
-        dogs[1].setOnClickListener(new View.OnClickListener() {
+        menu_BTN_topTen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openActivityPanelBulldog();
+                openActivityTopTen();
             }
         });
 
-        dogs[2].setOnClickListener(new View.OnClickListener() {
+        menu_BTN_Exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openActivityPanelBorderCollie();
+                exitGame();
             }
         });
 
     }
 
-    private void openActivityPanelPoodle() {
-        Intent gameScreen = new Intent(this, Activity_Panel.class);
-        gameScreen.putExtra("dog_id", R.drawable.poodlenew);
+    private void openActivitySettings() {
+        Intent gameScreen = new Intent(this, Activity_Settings.class);
         startActivity(gameScreen);
         finish();
     }
 
-    private void openActivityPanelBulldog() {
-        Intent gameScreen = new Intent(this, Activity_Panel.class);
-        gameScreen.putExtra("dog_id", R.drawable.img_bulldog);
-        startActivity(gameScreen);
-        finish();
+    private void openActivityTopTen() {
     }
 
-    private void openActivityPanelBorderCollie() {
-        Intent gameScreen = new Intent(this, Activity_Panel.class);
-        gameScreen.putExtra("dog_id", R.drawable.img_bordercollie);
-        startActivity(gameScreen);
-        finish();
+    private void exitGame() {
+        System.exit(0);
     }
 
     private void findViews() {
-        dogs = new ImageButton[]{
-                findViewById(R.id.Menu_BTN_poodle), findViewById(R.id.Menu_BTN_bulldog), findViewById(R.id.Menu_BTN_borderCollie)
-        };
+        menu_BTN_startGame = findViewById(R.id.menu_BTN_start);
+        menu_BTN_topTen = findViewById(R.id.menu_BTN_topTen);
+        menu_BTN_Exit = findViewById(R.id.menu_BTN_exit);
     }
+
 }
-
-

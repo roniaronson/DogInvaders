@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/menu_backround"
+    tools:context=".Activity_Menu">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_dogInvanders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/space2"
+            android:text="Dog Invanders"
+            android:textColor="@color/black"
+            android:textSize="45dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/menu_BTN_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="24dp"
+            android:text="Start Game" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/menu_BTN_topTen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="24dp"
+            android:layout_toRightOf="@+id/menu_BTN_start"
+            android:text="Top Ten" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/menu_BTN_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="24dp"
+            android:layout_toRightOf="@+id/menu_BTN_topTen"
+            android:text="Exit" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</RelativeLayout>

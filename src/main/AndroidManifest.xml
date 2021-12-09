@@ -11,7 +11,7 @@
             android:theme="@style/Theme.Design.NoActionBar"
             >
             <activity
-                android:name=".Activity_Menu"
+                android:name=".Activity_Settings"
                 android:screenOrientation="portrait"
                 android:exported="true">
                 <intent-filter>

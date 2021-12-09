@@ -5,16 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/menu_backround"
-    tools:context=".Activity_Menu">
+    tools:context=".Activity_Settings">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/settings_LBL_dogInvanders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -24,17 +25,60 @@
             android:textColor="@color/black"
             android:textSize="45dp" />
 
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/settings_SW_sensors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="Sensors"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/space2"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:layout_marginTop="50dp"
+           />
+
+        <RadioGroup
+            android:id="@+id/settings_RG_slowOrFast"
+            android:checkedButton="@+id/settings_RB_slow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            >
+        <RadioButton
+            android:id="@+id/settings_RB_slow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Slow"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/space2"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:buttonTint="@color/black"/>
+        <RadioButton
+            android:id="@+id/settings_RB_Fast"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Fast"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/space2"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:buttonTint="@color/black"/>
+        </RadioGroup>
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/settings_LBL_pickYourPlayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:textSize="30dp"
-            android:layout_marginTop="150dp"
-            android:textStyle="bold"
+            android:layout_marginTop="50dp"
             android:text="Pick Your Player:"
+            android:fontFamily="@font/space2"
             android:textColor="@color/black"
-            android:fontFamily="@font/space2"/>
+            android:textSize="30dp"
+
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,8 +89,8 @@
                 android:id="@+id/Menu_BTN_poodle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginTop="20dp"
+                android:layout_weight="1"
                 android:background="#00ffffff"
                 app:srcCompat="@drawable/poodlenew" />
 
@@ -54,8 +98,8 @@
                 android:id="@+id/Menu_BTN_bulldog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginTop="20dp"
+                android:layout_weight="1"
                 android:background="#00ffffff"
                 app:srcCompat="@drawable/img_bulldog" />
 
@@ -63,8 +107,8 @@
                 android:id="@+id/Menu_BTN_borderCollie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginTop="20dp"
+                android:layout_weight="1"
                 android:background="#00ffffff"
                 app:srcCompat="@drawable/img_bordercollie" />
         </LinearLayout>
