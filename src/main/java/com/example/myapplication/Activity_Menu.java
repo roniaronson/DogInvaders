@@ -3,21 +3,21 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.button.MaterialButton;
-
 public class Activity_Menu extends AppCompatActivity {
 
-    private MaterialButton menu_BTN_startGame;
-    private MaterialButton menu_BTN_topTen;
-    private MaterialButton menu_BTN_Exit;
+    private Button menu_BTN_startGame;
+    private Button menu_BTN_topTen;
+    private Button menu_BTN_Exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_menu);
+
         findViews();
 
         menu_BTN_startGame.setOnClickListener(new View.OnClickListener() {

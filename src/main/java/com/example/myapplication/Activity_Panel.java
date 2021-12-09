@@ -4,15 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import java.text.DecimalFormat;
 import java.util.Random;
 
 public class Activity_Panel extends AppCompatActivity {
@@ -22,16 +29,23 @@ public class Activity_Panel extends AppCompatActivity {
     private ImageView[] panel_IMG_hearts;
     private ImageButton[] panel_IMG_direction;
 
+    private SensorManager sensorManager;
+    private Sensor accSensor;
+
     private final int MAX_LIVES = 3;
-    private int curLives = 3;
+
     final int DELAY = 400;
+
+    private int timer = 0;
+
+    private int curLives = 3;
     private int index_PoodleRow = 8;
     private int path_number = 5;
     private int IMG_number = 9;
     private int index_bone = 9;
     private int IMG_dog = 10;
-    private int timer = 0;
     private int dog_id = 0;
+
     private  boolean is_slow = true;
     private boolean sensors = false;
 
@@ -64,6 +78,12 @@ public class Activity_Panel extends AppCompatActivity {
         mediaPlayer_cry = MediaPlayer.create(Activity_Panel.this, R.raw.dog_cry);
         findViews();
 
+        if(sensors){
+            initSensor();
+            panel_IMG_direction[0].setVisibility(View.INVISIBLE);
+            panel_IMG_direction[1].setVisibility(View.INVISIBLE);
+        }
+
         panel_IMG_direction[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,10 +97,7 @@ public class Activity_Panel extends AppCompatActivity {
             }
         });
 
-        if(sensors){
-            panel_IMG_direction[0].setVisibility(View.INVISIBLE);
-            panel_IMG_direction[1].setVisibility(View.INVISIBLE);
-        }
+
     }
 
     @Override
@@ -106,15 +123,15 @@ public class Activity_Panel extends AppCompatActivity {
 
     private void findViews() {
         view_path = new ImageView[][]{
-                {findViewById(R.id.panel_IMG_00), findViewById(R.id.panel_IMG_01), findViewById(R.id.panel_IMG_02)},
-                {findViewById(R.id.panel_IMG_10), findViewById(R.id.panel_IMG_11), findViewById(R.id.panel_IMG_12)},
-                {findViewById(R.id.panel_IMG_20), findViewById(R.id.panel_IMG_21), findViewById(R.id.panel_IMG_22)},
-                {findViewById(R.id.panel_IMG_30), findViewById(R.id.panel_IMG_31), findViewById(R.id.panel_IMG_32)},
-                {findViewById(R.id.panel_IMG_40), findViewById(R.id.panel_IMG_41), findViewById(R.id.panel_IMG_42)},
-                {findViewById(R.id.panel_IMG_50), findViewById(R.id.panel_IMG_51), findViewById(R.id.panel_IMG_52)},
-                {findViewById(R.id.panel_IMG_60), findViewById(R.id.panel_IMG_61), findViewById(R.id.panel_IMG_62)},
-                {findViewById(R.id.panel_IMG_70), findViewById(R.id.panel_IMG_71), findViewById(R.id.panel_IMG_72)},
-                {findViewById(R.id.panel_IMG_80), findViewById(R.id.panel_IMG_81), findViewById(R.id.panel_IMG_82)}
+                {findViewById(R.id.panel_IMG_00), findViewById(R.id.panel_IMG_01), findViewById(R.id.panel_IMG_02), findViewById(R.id.panel_IMG_03), findViewById(R.id.panel_IMG_04)},
+                {findViewById(R.id.panel_IMG_10), findViewById(R.id.panel_IMG_11), findViewById(R.id.panel_IMG_12), findViewById(R.id.panel_IMG_13), findViewById(R.id.panel_IMG_14)},
+                {findViewById(R.id.panel_IMG_20), findViewById(R.id.panel_IMG_21), findViewById(R.id.panel_IMG_22), findViewById(R.id.panel_IMG_23), findViewById(R.id.panel_IMG_24)},
+                {findViewById(R.id.panel_IMG_30), findViewById(R.id.panel_IMG_31), findViewById(R.id.panel_IMG_32), findViewById(R.id.panel_IMG_33), findViewById(R.id.panel_IMG_34)},
+                {findViewById(R.id.panel_IMG_40), findViewById(R.id.panel_IMG_41), findViewById(R.id.panel_IMG_42), findViewById(R.id.panel_IMG_43), findViewById(R.id.panel_IMG_44)},
+                {findViewById(R.id.panel_IMG_50), findViewById(R.id.panel_IMG_51), findViewById(R.id.panel_IMG_52), findViewById(R.id.panel_IMG_53), findViewById(R.id.panel_IMG_54)},
+                {findViewById(R.id.panel_IMG_60), findViewById(R.id.panel_IMG_61), findViewById(R.id.panel_IMG_62), findViewById(R.id.panel_IMG_63), findViewById(R.id.panel_IMG_64)},
+                {findViewById(R.id.panel_IMG_70), findViewById(R.id.panel_IMG_71), findViewById(R.id.panel_IMG_72), findViewById(R.id.panel_IMG_73), findViewById(R.id.panel_IMG_74)},
+                {findViewById(R.id.panel_IMG_80), findViewById(R.id.panel_IMG_81), findViewById(R.id.panel_IMG_82), findViewById(R.id.panel_IMG_83), findViewById(R.id.panel_IMG_84)}
         };
         vals = new int[view_path.length][view_path[0].length];
         for (int i = 0; i < vals.length; i++) {
@@ -238,26 +255,29 @@ public class Activity_Panel extends AppCompatActivity {
             }
         }
         int curPos = getDogPosition();
-        if (curPos == 0) {
-            panel_IMG_direction[0].setVisibility(View.INVISIBLE);
-            panel_IMG_direction[1].setVisibility(View.VISIBLE);
+        if(!sensors){
+            if (curPos == 0) {
+                panel_IMG_direction[0].setVisibility(View.INVISIBLE);
+                panel_IMG_direction[1].setVisibility(View.VISIBLE);
+            }
+            if (curPos == 1) {
+                panel_IMG_direction[0].setVisibility(View.VISIBLE);
+                panel_IMG_direction[1].setVisibility(View.VISIBLE);
+            }
+            if (curPos == 2) {
+                panel_IMG_direction[0].setVisibility(View.VISIBLE);
+                panel_IMG_direction[1].setVisibility(View.VISIBLE);
+            }
+            if (curPos == 3) {
+                panel_IMG_direction[0].setVisibility(View.VISIBLE);
+                panel_IMG_direction[1].setVisibility(View.VISIBLE);
+            }
+            if (curPos == 4) {
+                panel_IMG_direction[0].setVisibility(View.VISIBLE);
+                panel_IMG_direction[1].setVisibility(View.INVISIBLE);
+            }
         }
-        if (curPos == 1) {
-            panel_IMG_direction[0].setVisibility(View.VISIBLE);
-            panel_IMG_direction[1].setVisibility(View.VISIBLE);
-        }
-        if (curPos == 2) {
-            panel_IMG_direction[0].setVisibility(View.VISIBLE);
-            panel_IMG_direction[1].setVisibility(View.VISIBLE);
-        }
-        if (curPos == 3) {
-            panel_IMG_direction[0].setVisibility(View.VISIBLE);
-            panel_IMG_direction[1].setVisibility(View.VISIBLE);
-        }
-        if (curPos == 4) {
-            panel_IMG_direction[0].setVisibility(View.VISIBLE);
-            panel_IMG_direction[1].setVisibility(View.INVISIBLE);
-        }
+
     }
 
     private int getDogPosition() {
@@ -268,15 +288,50 @@ public class Activity_Panel extends AppCompatActivity {
         return -1;
     }
 
-    private void moveDog(int direction) {
+    private void moveDog(float direction) {
         int curPos = getDogPosition();
         vals[index_PoodleRow][curPos] = 0;
-        if (direction == 1)
-            curPos++;
-        else
-            curPos--;
+            if (direction == 1 && curPos < 4)
+                curPos++;
+            if(direction < 1 && curPos > 0)
+                curPos--;
         vals[index_PoodleRow][curPos] = IMG_dog;
+    }
 
+    //---------Sensors----------
+    private void initSensor() {
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        accSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    }
+
+    private final SensorEventListener accSensorEventListener = new SensorEventListener() {
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            DecimalFormat df = new DecimalFormat("##.##");
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            if( x > 1.5)
+                moveDog(-1);
+            if(x < -1.5)
+                moveDog(1);
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int i) {
+        }
+    };
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(accSensorEventListener, accSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(accSensorEventListener);
     }
 
     private void vibrate() {
