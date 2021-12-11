@@ -27,6 +27,8 @@ public class Fragment_List extends Fragment {
 
     private ArrayList<Record> records ;
 
+    private String arr[];
+
     public void setActivity(AppCompatActivity activity) {
         this.activity = activity;
     }
@@ -40,39 +42,45 @@ public class Fragment_List extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         top10List = (ListView) view.findViewById(R.id.panel_list_top10);
 
-        records = callBackList.getRecords();
-        String arr[] = new String[records.size()];
-        for (int i = 0; i < records.size(); i++) {
-            arr[i] = records.get(i).toString();
-            Log.d("jjjjj", "onCreateView: "+arr[i].toString());
-        }
-
-        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
-                getActivity(),
-                android.R.layout.simple_list_item_1,
-                arr);
-
-//        ListView simpleList = view.findViewById(R.id.panel_list_top10);
-//        String countryList[] = {"India", "China", "australia", "Portugle", "America", "NewZealand"};
+//        records = callBackList.getRecords();
+//        arr = new String[records.size()];
+//        for (int i = 0; i < records.size(); i++) {
+//            arr[i] = records.get(i).toString();
+//        }
 //
+//        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
+//                getActivity(),
+//                android.R.layout.simple_list_item_1,
+//                arr);
 //
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),  android.R.layout.simple_list_item_1, countryList);
-//        simpleList.setAdapter(arrayAdapter);
-
-
-
-
-        top10List.setAdapter(listViewAdapter);
-//        top10List.setAdapter(arrayAdapter);
+//        top10List.setAdapter(listViewAdapter);
+//
 //        top10List.setOnItemClickListener((parent, view1, position, id) ->
 //        {
-//            Record r = (Record) parent.getItemAtPosition(position);
-//            //callBackList.ZoomOnMap(r.getLat(), r.getLon());
-//            Log.d("psss", "onCreateView: "+"hi");
+//            Record r = (Record) (parent.getItemAtPosition(position));
+//            callBackList.ZoomOnMap(r.getLat(), r.getLon());
 //        });
+
+        records = callBackList.getRecords();
+        findViews(view);
+
+        ArrayAdapter<Record> listViewAdapter = new ArrayAdapter<>(
+                getActivity(),
+                android.R.layout.simple_list_item_1,
+                records);
+
+        top10List.setAdapter(listViewAdapter);
+
+        top10List.setOnItemClickListener((parent, view1, position, id) ->
+        {
+            Record r = (Record) parent.getItemAtPosition(position);
+            callBackList.ZoomOnMap(r.getLat(), r.getLon());
+        });
 
         return view;
     }
+
+
 
     private void findViews(View view) {
         top10List = (ListView) view.findViewById(R.id.panel_list_top10);

@@ -56,11 +56,11 @@
             android:layout_weight="1"
             android:background="#B609FF">
 
-<!--            <fragment-->
-<!--                android:id="@+id/gameOver_fragment_map"-->
-<!--                android:name="com.google.android.gms.maps.SupportMapFragment"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent" />-->
+            <fragment
+                android:id="@+id/gameOver_fragment_map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </FrameLayout>
 

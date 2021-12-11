@@ -21,8 +21,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import com.example.myapplication.call_backs.CallBack_List;
+import com.example.myapplication.call_backs.CallBack_Map;
 import com.example.myapplication.fragments.Fragment_List;
+import com.example.myapplication.fragments.Fragment_Map;
 import com.example.myapplication.objects.RecordComparator;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.example.myapplication.objects.MyDB;
 import com.example.myapplication.objects.Record;
@@ -32,9 +38,11 @@ import com.example.myapplication.objects.Record;
 public class Activity_GameOver extends AppCompatActivity {
 
     private Fragment_List fragmentList;
+    private Fragment_Map fragmentMap;
+
 
     ImageButton[] playOrExit;
-
+    double[] latLon = new double[2];
     private String distanceCounter;
     private String name = "";
 
@@ -52,7 +60,7 @@ public class Activity_GameOver extends AppCompatActivity {
         setContentView(R.layout.activity_gameover);
 
         findViews();
-        initFragments();
+
 
         loadFromSP();
 
@@ -62,13 +70,16 @@ public class Activity_GameOver extends AppCompatActivity {
         if (b != null) {
             distanceCounter = b.getString("distance");
             name = b.getString("name");
+            latLon[0] = b.getDouble("lat");
+            latLon[1] = b.getDouble("lon");
             temp.add(new Record().setTime(String.valueOf(LocalDate.now()) + " " + String.valueOf(LocalTime.now().format(dtf)))
                     .setScore(Integer.parseInt(distanceCounter))
-                    .setLat(5 * 10)
-                    .setLon(5 * 10)
+                    .setLat(latLon[0])
+                    .setLon(latLon[1])
                     .setName(name));
         }
-
+        initFragments();
+        Log.d("idanveroni2", "onCreate: "+" "+latLon[0]+"||"+latLon[1]);
         myDB.setRecords(temp);
 
         saveToSP();
@@ -89,10 +100,26 @@ public class Activity_GameOver extends AppCompatActivity {
 
     }
 
+    CallBack_Map callBack_map = (lat, lon) -> {
+        //Zoom to place
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.gameOver_fragment_map);
+        mapFragment.getMapAsync(googleMap -> {
+            LatLng latLng = new LatLng(lat, lon);
+            googleMap.clear();
+            googleMap.addMarker(new MarkerOptions().position(latLng).title("Played Here!"));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15), 5000, null);
+        });
+    };
+
     CallBack_List callBackList = new CallBack_List() {
         @Override
         public ArrayList<Record> getRecords() {
             return myDB.getRecords();
+        }
+
+        @Override
+        public void ZoomOnMap(double lat, double lon) {
+            callBack_map.mapClicked(lat, lon);
         }
     };
 
@@ -100,7 +127,13 @@ public class Activity_GameOver extends AppCompatActivity {
         fragmentList = new Fragment_List();
         fragmentList.setActivity(Activity_GameOver.this);
         fragmentList.setCallBackList(callBackList);
+        callBackList.ZoomOnMap(latLon[0],latLon[1] );
         getSupportFragmentManager().beginTransaction().add(R.id.gameOver_frame_topTen, fragmentList).commit();
+
+        fragmentMap = new Fragment_Map();
+        fragmentMap.setActivity(Activity_GameOver.this);
+        fragmentMap.setCallBack_map(callBack_map);
+        getSupportFragmentManager().beginTransaction().add(R.id.gameOver_frame_map, fragmentMap).commit();
     }
 
     public void loadFromSP() {
