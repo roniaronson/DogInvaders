@@ -9,12 +9,12 @@
 
 
     <TextView
-        android:id="@+id/txt_dogInvanders"
+        android:id="@+id/txt_dogInvaders"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:fontFamily="@font/space2"
-        android:text="Dog Invanders"
+        android:text="Dog Invaders"
         android:textColor="@color/black"
         android:textSize="45dp" />
 
@@ -22,7 +22,7 @@
             android:id="@+id/menu_BTN_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txt_dogInvanders"
+            android:layout_below="@id/txt_dogInvaders"
             android:layout_centerInParent="true"
             android:text="Start Game" />
 

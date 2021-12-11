@@ -15,13 +15,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/settings_LBL_dogInvanders"
+            android:id="@+id/settings_LBL_dogInvaders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"
             android:fontFamily="@font/space2"
-            android:text="Dog Invanders"
+            android:text="Dog Invaders"
             android:textColor="@color/black"
             android:textSize="45dp" />
 
