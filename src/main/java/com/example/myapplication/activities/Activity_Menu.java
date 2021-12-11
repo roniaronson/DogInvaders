@@ -53,6 +53,9 @@ public class Activity_Menu extends AppCompatActivity {
     }
 
     private void openActivityTopTen() {
+        finish();
+        Intent gameOverScreen = new Intent(this, Activity_GameOver.class);
+        startActivity(gameOverScreen);
     }
 
     private void exitGame() {
