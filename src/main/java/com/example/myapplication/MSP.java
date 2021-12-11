@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class MSP {
 
-    private final String SP_FILE = "SP_FILE";
+    private final String SP_FILE = "SP_FILE3";
     private static MSP me;
     private SharedPreferences sharedPreferences;
 

@@ -48,9 +48,9 @@ public class Activity_GameOver extends AppCompatActivity {
 
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 
-    private MyDB myDB;
+    private MyDB myDB = new MyDB();
 
-    private ArrayList<Record> temp = new ArrayList<>();
+    private ArrayList<Record> temp;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -58,13 +58,12 @@ public class Activity_GameOver extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameover);
-
         findViews();
-
+        initFragments();
 
         loadFromSP();
-
-        temp = myDB.getRecords();
+        if (myDB == null)
+            myDB = new MyDB();
 
         Bundle b = getIntent().getExtras();
         if (b != null) {
@@ -72,15 +71,13 @@ public class Activity_GameOver extends AppCompatActivity {
             name = b.getString("name");
             latLon[0] = b.getDouble("lat");
             latLon[1] = b.getDouble("lon");
-            temp.add(new Record().setTime(String.valueOf(LocalDate.now()) + " " + String.valueOf(LocalTime.now().format(dtf)))
+            myDB.getRecords().add(new Record().setTime(String.valueOf(LocalDate.now()) + " " + String.valueOf(LocalTime.now().format(dtf)))
                     .setScore(Integer.parseInt(distanceCounter))
                     .setLat(latLon[0])
                     .setLon(latLon[1])
                     .setName(name));
         }
-        initFragments();
-        Log.d("idanveroni2", "onCreate: "+" "+latLon[0]+"||"+latLon[1]);
-        myDB.setRecords(temp);
+
 
         saveToSP();
 
@@ -127,7 +124,7 @@ public class Activity_GameOver extends AppCompatActivity {
         fragmentList = new Fragment_List();
         fragmentList.setActivity(Activity_GameOver.this);
         fragmentList.setCallBackList(callBackList);
-        callBackList.ZoomOnMap(latLon[0],latLon[1] );
+        callBackList.ZoomOnMap(latLon[0], latLon[1]);
         getSupportFragmentManager().beginTransaction().add(R.id.gameOver_frame_topTen, fragmentList).commit();
 
         fragmentMap = new Fragment_Map();
@@ -137,20 +134,23 @@ public class Activity_GameOver extends AppCompatActivity {
     }
 
     public void loadFromSP() {
+        if (myDB == null)
+            myDB = new MyDB();
         String js = MSP.getMe().getString("MY_DB", "");
         myDB = new Gson().fromJson(js, MyDB.class);
-        Log.d("roni", "loadFromSP: " + js);
     }
 
     public void saveToSP() {
+        if (myDB == null)
+            myDB = new MyDB();
         pickTop10FromDB();
         String json = new Gson().toJson(myDB);
         MSP.getMe().putString("MY_DB", json);
-        Log.d("ronii", "onCreate: " + json);
-
     }
 
     private void pickTop10FromDB() {
+        if (myDB == null)
+            myDB = new MyDB();
         temp = myDB.getRecords();
         Collections.sort(temp, new RecordComparator());
         ArrayList<Record> res = new ArrayList<>();
@@ -159,7 +159,7 @@ public class Activity_GameOver extends AppCompatActivity {
             res.add(temp.get(counter));
             counter++;
         }
-        myDB.setRecords(res);
+        temp = res;
     }
 
     private void openActivityPanel() {

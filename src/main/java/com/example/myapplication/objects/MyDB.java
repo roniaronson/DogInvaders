@@ -17,6 +17,10 @@ public class MyDB {
         return this;
     }
 
+    public void AddRecord(Record record){
+        records.add(record);
+    }
+
     @Override
     public String toString() {
         return "MyDB{" +
