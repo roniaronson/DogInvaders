@@ -5,18 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/menu_backround"
-    tools:context=".Activity_Menu">
+    tools:context=".activities.Activity_Menu">
 
 
-        <TextView
-            android:id="@+id/txt_dogInvanders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/space2"
-            android:text="Dog Invanders"
-            android:textColor="@color/black"
-            android:textSize="45dp" />
+    <TextView
+        android:id="@+id/txt_dogInvanders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/space2"
+        android:text="Dog Invanders"
+        android:textColor="@color/black"
+        android:textSize="45dp" />
 
         <Button
             android:id="@+id/menu_BTN_start"

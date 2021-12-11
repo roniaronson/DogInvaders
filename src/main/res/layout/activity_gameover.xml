@@ -1,35 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_gameoverback"
-    tools:context=".Activity_GameOver">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="180dp"
-        android:fontFamily="@font/space2"
-        android:text="GAME OVER"
-        android:textColor="@color/black"
-        android:textSize="50dp" />
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textView"
-        android:orientation="horizontal">
+        android:layout_above="@id/gameOver_buttoms"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/gameOver_LBL_topTen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/space2"
+            android:text="TOP 10"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
+
+        <FrameLayout
+            android:id="@+id/gameOver_frame_topTen"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="24dp"
+            android:layout_weight="1"
+            android:background="@color/white">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <TextView
+                android:id="@+id/gameOver_LBL_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/space2"
+                android:text="MAP"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/gameOver_frame_map"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#B609FF">
+
+<!--            <fragment-->
+<!--                android:id="@+id/gameOver_fragment_map"-->
+<!--                android:name="com.google.android.gms.maps.SupportMapFragment"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent" />-->
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/gameOver_buttoms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp">
 
         <ImageButton
             android:id="@+id/gameOver_BTN_play"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
             android:layout_weight="1"
             android:background="#00ffffff"
             app:srcCompat="@drawable/playbutton" />
@@ -38,8 +85,6 @@
             android:id="@+id/gameOver_BTN_exit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
             android:layout_weight="1"
             android:background="#00ffffff"
             app:srcCompat="@drawable/img_logout" />

@@ -1,15 +1,19 @@
-package com.example.myapplication;
+package com.example.myapplication.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.R;
+import com.example.myapplication.activities.Activity_Panel;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.textfield.TextInputEditText;
 
 
 public class Activity_Settings extends AppCompatActivity {
@@ -19,6 +23,7 @@ public class Activity_Settings extends AppCompatActivity {
     RadioButton rb_fast;
     RadioGroup rg_slowOrFast;
     SwitchMaterial sw_sensors;
+    EditText name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,7 @@ public class Activity_Settings extends AppCompatActivity {
         gameScreen.putExtra("dog_id", dog_id);
         gameScreen.putExtra("sensors", sw_sensors.isChecked());
         gameScreen.putExtra("isSlow", rb_slow.isChecked());
+        gameScreen.putExtra("name", name.getText().toString());
         startActivity(gameScreen);
 
     }
@@ -65,6 +71,7 @@ public class Activity_Settings extends AppCompatActivity {
         rb_slow = findViewById(R.id.settings_RB_slow);
         rb_fast = findViewById(R.id.settings_RB_Fast);
         sw_sensors = findViewById(R.id.settings_SW_sensors);
+        name = findViewById(R.id.Settings_Etxt_name);
     }
 }
 

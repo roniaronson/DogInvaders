@@ -5,7 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mainbackground"
-    tools:context=".Activity_Panel">
+    tools:context=".activities.Activity_Panel">
+
+    <TextView
+        android:id="@+id/panel_LBL_distanceCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/panel_IMG_heart1"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:textSize="40dp"
+        android:textColor="@color/black"
+        android:text="0000"
+        android:visibility="invisible"/>
 
     <ImageView
         android:id="@+id/panel_IMG_heart1"

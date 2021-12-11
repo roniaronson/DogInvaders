@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,9 +14,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.myapplication.R;
 
 import java.text.DecimalFormat;
 import java.util.Random;
@@ -27,6 +31,7 @@ public class Activity_Panel extends AppCompatActivity {
     private int[][] vals;
     private ImageView[] panel_IMG_hearts;
     private ImageButton[] panel_IMG_direction;
+    private TextView distance_counter;
 
     private SensorManager sensorManager;
     private Sensor accSensor;
@@ -44,9 +49,10 @@ public class Activity_Panel extends AppCompatActivity {
     private int index_bone = 9;
     private int IMG_dog = 10;
     private int dog_id = 0;
-
+    private int distanceCounter = 0;
     private  boolean is_slow = true;
     private boolean sensors = false;
+    private String name = "";
 
     MediaPlayer mediaPlayer_background;
     MediaPlayer mediaPlayer_bark;
@@ -71,6 +77,7 @@ public class Activity_Panel extends AppCompatActivity {
         dog_id = b.getInt("dog_id");
         is_slow = b.getBoolean("isSlow");
         sensors = b.getBoolean("sensors");
+        name = b.getString("name");
         mediaPlayer_background =  MediaPlayer.create(Activity_Panel.this, R.raw.music);
         mediaPlayer_background.start();
         mediaPlayer_bark = MediaPlayer.create(Activity_Panel.this, R.raw.single_bark);
@@ -80,6 +87,7 @@ public class Activity_Panel extends AppCompatActivity {
 
         initDELAY(is_slow);
 
+        distance_counter.setVisibility(View.VISIBLE);
         if(sensors){
             initSensor();
             panel_IMG_direction[0].setVisibility(View.INVISIBLE);
@@ -155,9 +163,12 @@ public class Activity_Panel extends AppCompatActivity {
 
         panel_IMG_hearts = new ImageView[]{
                 findViewById(R.id.panel_IMG_heart1), findViewById(R.id.panel_IMG_heart2), findViewById(R.id.panel_IMG_heart3)};
+
+        distance_counter = findViewById(R.id.panel_LBL_distanceCounter);
     }
 
     private void runLogic() {
+        distanceCounter++ ;
         for (int i = vals.length - 2; i > 0; i--) {
             for (int j = 0; j < vals[i].length; j++) {
                 vals[i][j] = vals[i - 1][j];
@@ -210,6 +221,9 @@ public class Activity_Panel extends AppCompatActivity {
                 mediaPlayer_background.stop();
                 finish();
                 Intent gameOverScreen = new Intent(this, Activity_GameOver.class);
+                gameOverScreen.putExtra("distance", String.valueOf(distanceCounter));
+                gameOverScreen.putExtra("name", name);
+                Log.d("namegame", "updateLives: "+name);
                 startActivity(gameOverScreen);
             }
         }
@@ -286,6 +300,7 @@ public class Activity_Panel extends AppCompatActivity {
                 panel_IMG_direction[1].setVisibility(View.INVISIBLE);
             }
         }
+        distance_counter.setText(""+distanceCounter);
 
     }
 
